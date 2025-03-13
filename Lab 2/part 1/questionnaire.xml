@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="styles.css"?>
+<questionnaire>
+    <question>
+        <text>What is your name?</text>
+        <answer>Volodymyr</answer>
+    </question>
+    <question>
+        <text>What is your primary programming language?</text>
+        <answer>Java</answer>
+    </question>
+    <question>
+        <text>What is your main area of interest in IT?</text>
+        <answer>Backend development and database optimization</answer>
+    </question>
+    <question>
+        <text>What technologies have you worked with?</text>
+        <answer>Spring, MongoDB, PostgreSQL, RabbitMQ, Redis etc.</answer>
+    </question>
+    <question>
+        <text>What are your professional goals?</text>
+        <answer>To become a skilled backend developer and contribute to high-performance systems</answer>
+    </question>
+</questionnaire>

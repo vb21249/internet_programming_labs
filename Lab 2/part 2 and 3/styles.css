@@ -1,0 +1,40 @@
+/* Стили для анкеты */
+questionnaire {
+    width: 80%;
+    max-width: 700px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    font-family: Arial, sans-serif;
+}
+
+/* Имя по центру */
+answer>name {
+    display: block;
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Стиль для каждого ответа в отдельном блоке */
+answer {
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+/* Текстовые элементы */
+answer>*:not(name) {
+    margin-top: 10px;
+    color: #555;
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+/* Разделение каждого блока ответа */
+answer>* {
+    display: block;
+}

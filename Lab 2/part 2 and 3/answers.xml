@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="styles.css"?>
+<questionnaire>
+    <answer>
+        <name>Volodymyr</name>
+        <language>Java</language>
+        <interest>Backend development and database optimization</interest>
+        <technologies>Spring, MongoDB, PostgreSQL, RabbitMQ, Redis etc.</technologies>
+        <goals>To become a skilled backend developer and contribute to high-performance systems</goals>
+    </answer>
+    <answer>
+        <name>Bogdan</name>
+        <language>Python</language>
+        <interest>Backend development and database optimization</interest>
+        <technologies>Spring, MongoDB, PostgreSQL, RabbitMQ, Redis etc.</technologies>
+        <goals>To become a skilled backend developer and contribute to high-performance systems</goals>
+    </answer>
+</questionnaire>
