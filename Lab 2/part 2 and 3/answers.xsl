@@ -20,11 +20,11 @@
                 </tr>
                 <xsl:for-each select="questionnaire/answer">
                     <tr>
-                        <td><xsl:value-of select="questionnaire/answer/name"/></td>
-                        <td><xsl:value-of select="questionnaire/answer/language"/></td>
-                        <td><xsl:value-of select="questionnaire/answer/interest"/></td>
-                        <td><xsl:value-of select="questionnaire/answer/technologies"/></td>
-                        <td><xsl:value-of select="questionnaire/answer/goals"/></td>
+                        <td><xsl:value-of select="name"/></td>
+                        <td><xsl:value-of select="language"/></td>
+                        <td><xsl:value-of select="interest"/></td>
+                        <td><xsl:value-of select="technologies"/></td>
+                        <td><xsl:value-of select="goals"/></td>
                     </tr>
                 </xsl:for-each>
             </table>

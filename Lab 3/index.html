@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Math Trainer</title>
+</head>
+
+<body>
+    <h1>Math Trainer</h1>
+
+    <div class="options">
+        <div>Range:</div>
+        <button class="range active" data-range="10">0-10</button>
+        <button class="range" data-range="20">0-20</button>
+        <button class="range" data-range="100">0-100</button>
+        <button class="range" data-range="150">0-150</button>
+    </div>
+
+    <div class="options">
+        <div>Operations:</div>
+        <button class="operation active" data-op="+">+</button>
+        <button class="operation" data-op="-">-</button>
+        <button class="operation" data-op="*">×</button>
+        <button class="operation" data-op="/">÷</button>
+    </div>
+
+    <div class="problem">
+        <span id="question">5 + 6 =</span>
+        <input type="text" id="answer">
+        <button id="help">?</button>
+    </div>
+
+    <button id="submit">Check Answer</button>
+
+    <div class="numpad">
+        <button class="num">1</button>
+        <button class="num">2</button>
+        <button class="num">3</button>
+        <button class="num">4</button>
+        <button class="num">5</button>
+        <button class="num">6</button>
+        <button class="num">7</button>
+        <button class="num">8</button>
+        <button class="num">9</button>
+        <button class="num" data-val="C">C</button>
+        <button class="num">0</button>
+        <button class="num" data-val="←">←</button>
+    </div>
+
+    <div id="message" class="message" style="display:none"></div>
+
+    <script src="calculator.js"></script>
+</body>
+
+</html>
