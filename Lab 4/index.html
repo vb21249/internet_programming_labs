@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-container {
+            flex: 1;
+        }
+
+        .code-container {
+            flex: 1;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            background-color: #5cb8e0;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            background-color: #5cb8e0d3;
+        }
+
+        .file-upload {
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            border-bottom: none;
+        }
+
+        .tab.active {
+            background-color: #fff;
+            border-bottom: 1px solid #fff;
+        }
+
+        .tab-content {
+            display: none;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-top: -1px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Survey Form</h1>
+
+    <div class="container">
+        <div class="form-container">
+            <form id="data-form">
+                <div class="form-group">
+                    <label for="full-name">Full Name:</label>
+                    <input type="text" id="full-name" name="full-name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="age-group">Age Group:</label>
+                    <select id="age-group" name="age-group">
+                        <option value="">Select...</option>
+                        <option value="under-18">Under 18</option>
+                        <option value="18-24">18–24</option>
+                        <option value="25-34">25–34</option>
+                        <option value="35-44">35–44</option>
+                        <option value="45-plus">45+</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender">
+                        <option value="">Select...</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedback">Feedback:</label>
+                    <textarea id="feedback" name="feedback"></textarea>
+                </div>
+            </form>
+
+            <div>
+                <button id="update-json-btn" class="btn">Update JSON</button>
+                <button id="update-xml-btn" class="btn">Update XML</button>
+                <button id="populate-form-btn" class="btn">Populate Form from Code</button>
+            </div>
+        </div>
+
+        <div class="code-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="json">JSON</div>
+                <div class="tab" data-tab="xml">XML</div>
+                <div class="tab" data-tab="import">Import</div>
+            </div>
+
+            <div class="tab-content active" id="json-content">
+                <textarea id="json-textarea" placeholder="JSON data will appear here..."></textarea>
+                <button id="export-json-btn" class="btn">Export JSON</button>
+            </div>
+
+            <div class="tab-content" id="xml-content">
+                <textarea id="xml-textarea" placeholder="XML data will appear here..."></textarea>
+                <button id="export-xml-btn" class="btn">Export XML</button>
+            </div>
+
+            <div class="tab-content" id="import-content">
+                <div class="file-upload">
+                    <h3>Upload File</h3>
+                    <input type="file" id="file-input" accept=".json,.xml">
+                </div>
+                <div>
+                    <button id="parse-file-btn" class="btn">Process File</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // All tabs - inactive
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+                // Selected tab - active
+                tab.classList.add('active');
+                document.getElementById(`${tab.dataset.tab}-content`).classList.add('active');
+            });
+        });
+
+        // Getting data obj from the form
+        function getFormData() {
+            const form = document.getElementById('data-form');
+            return {
+                'full-name': form.querySelector('#full-name').value,
+                'email': form.querySelector('#email').value,
+                'age-group': form.querySelector('#age-group').value,
+                'gender': form.querySelector('#gender').value,
+                'feedback': form.querySelector('#feedback').value
+            };
+        }
+
+        // Form populating from object 
+        function populateForm(data) {
+            const form = document.getElementById('data-form');
+            form.querySelector('#full-name').value = data['full-name'] || '';
+            form.querySelector('#email').value = data['email'] || '';
+            form.querySelector('#age-group').value = data['age-group'] || '';
+            form.querySelector('#gender').value = data['gender'] || '';
+            form.querySelector('#feedback').value = data['feedback'] || '';
+        }
+
+        // Form data to JSON
+        function updateJson() {
+            const data = getFormData();
+            const jsonStr = JSON.stringify(data, null, 2);
+            document.getElementById('json-textarea').value = jsonStr;
+        }
+
+        // Form data to XML
+        function updateXml() {
+            const data = getFormData();
+            let xmlStr = '<survey_data>\n';
+            for (const [key, value] of Object.entries(data)) {
+                xmlStr += `  <${key}>${value}</${key}>\n`;
+            }
+            xmlStr += '</survey_data>';
+            document.getElementById('xml-textarea').value = xmlStr;
+        }
+
+        // Form Populating with JSON/XML
+        function populateFormFromCode() {
+            const activeTab = document.querySelector('.tab.active').dataset.tab;
+
+            if (activeTab === 'json') {
+                try {
+                    const jsonStr = document.getElementById('json-textarea').value;
+                    const data = JSON.parse(jsonStr);
+                    populateForm(data);
+                } catch (e) {
+                    alert('JSON parsing error: ' + e.message);
+                }
+            } else if (activeTab === 'xml') {
+                try {
+                    const xmlStr = document.getElementById('xml-textarea').value;
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlStr, 'text/xml');
+
+                    const data = {};
+                    const elements = xmlDoc.getElementsByTagName('survey_data')[0].children;
+
+                    for (let i = 0; i < elements.length; i++) {
+                        const element = elements[i];
+                        data[element.tagName] = element.textContent;
+                    }
+
+                    populateForm(data);
+                } catch (e) {
+                    alert('XML parsing error: ' + e.message);
+                }
+            }
+        }
+
+        function handleFileUpload() {
+            const fileInput = document.getElementById('file-input');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Select file.');
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const fileContent = e.target.result;
+
+                if (file.name.endsWith('.json')) {
+                    // JSON
+                    try {
+                        const data = JSON.parse(fileContent);
+                        populateForm(data);
+                        document.getElementById('json-textarea').value = JSON.stringify(data, null, 2);
+                        // JSON tab switch
+                        document.querySelector('.tab[data-tab="json"]').click();
+                    } catch (e) {
+                        alert('JSON parsing error: ' + e.message);
+                    }
+                } else if (file.name.endsWith('.xml')) {
+                    // XML
+                    try {
+                        const parser = new DOMParser();
+                        const xmlDoc = parser.parseFromString(fileContent, 'text/xml');
+
+                        const data = {};
+                        const elements = xmlDoc.getElementsByTagName('survey_data')[0].children;
+
+                        for (let i = 0; i < elements.length; i++) {
+                            const element = elements[i];
+                            data[element.tagName] = element.textContent;
+                        }
+
+                        populateForm(data);
+                        document.getElementById('xml-textarea').value = fileContent;
+                        // XML tab switch
+                        document.querySelector('.tab[data-tab="xml"]').click();
+                    } catch (e) {
+                        alert('XML parsing error: ' + e.message);
+                    }
+                } else {
+                    alert('Unsupported file type :( Try xml or json.');
+                }
+            };
+
+            reader.readAsText(file);
+        }
+
+        // EXPORT
+        function exportJsonFile(content, fileName) {
+            const blob = new Blob([content], { type: 'application/json' });
+            downloadFile(blob, fileName);
+        }
+        function exportXmlFile(content, fileName) {
+            const blob = new Blob([content], { type: 'text/xml' });
+            downloadFile(blob, fileName);
+        }
+
+        function downloadFile(blob, fileName) {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Events binding
+        document.getElementById('update-json-btn').addEventListener('click', updateJson);
+        document.getElementById('update-xml-btn').addEventListener('click', updateXml);
+        document.getElementById('populate-form-btn').addEventListener('click', populateFormFromCode);
+        document.getElementById('parse-file-btn').addEventListener('click', handleFileUpload);
+
+        document.getElementById('export-json-btn').addEventListener('click', () => {
+            const content = document.getElementById('json-textarea').value;
+            if (content.trim() === '') {
+                alert('JSON is empty. There is nothing to export.');
+                return;
+            }
+            exportJsonFile(content, 'data.json');
+        });
+
+        document.getElementById('export-xml-btn').addEventListener('click', () => {
+            const content = document.getElementById('xml-textarea').value;
+            if (content.trim() === '') {
+                alert('XML is empty. There is nothing to export.');
+                return;
+            }
+            exportXmlFile(content, 'data.xml');
+        });
+
+        window.onload = function () {
+            const jsonExample = {
+                "full-name": "Joe Doe",
+                "email": "joe@example.com",
+                "age-group": "25-34",
+                "gender": "male",
+                "feedback": "Cool!"
+            };
+            document.getElementById('json-textarea').value = JSON.stringify(jsonExample, null, 2);
+
+            // XML EXAMPLE
+            const xmlExample =
+                `<survey_data>
+                    <full-name>Joe Doe</full-name>
+                    <email>ivan@example.com</email>
+                    <age-group>25-34</age-group>
+                    <gender>male</gender>
+                    <feedback>Cool!</feedback>
+                </survey_data>`;
+            document.getElementById('xml-textarea').value = xmlExample;
+        };
+    </script>
+</body>
+
+</html>

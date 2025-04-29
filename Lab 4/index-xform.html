@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+
+<head>
+    <title>Survey Form</title>
+
+    <xf:model id="survey-data">
+        <xf:instance id="survey-data-instance">
+            <survey xmlns="">
+                <fullName></fullName>
+                <email></email>
+                <ageGroup></ageGroup>
+                <gender></gender>
+                <feedback></feedback>
+            </survey>
+        </xf:instance>
+
+        <xf:submission id="submit" method="post" action="http://example.com/submit-survey"
+            mediatype="application/xml" />
+
+        <xf:bind nodeset="fullName" required="true()" />
+        <xf:bind nodeset="email" required="true()" type="xsd:string"
+            constraint="matches(., '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$')" />
+        <xf:bind nodeset="ageGroup" required="true()" />
+        <xf:bind nodeset="gender" required="true()" />
+        <xf:bind nodeset="feedback" required="false()" />
+    </xf:model>
+</head>
+
+<body>
+    <h1>Survey Form</h1>
+
+    <div class="xform-container">
+        <div class="xform-group">
+            <div class="xform-group-title">Personal Information</div>
+
+            <div class="xform-control">
+                <xf:input ref="fullName">
+                    <xf:label class="xform-caption">Full Name:</xf:label>
+                    <xf:hint>Enter your full name</xf:hint>
+                    <xf:alert>Full name is required</xf:alert>
+                </xf:input>
+            </div>
+
+            <div class="xform-control">
+                <xf:input ref="email">
+                    <xf:label class="xform-caption">Email:</xf:label>
+                    <xf:hint>Enter your email address</xf:hint>
+                    <xf:alert>Valid email address is required</xf:alert>
+                </xf:input>
+            </div>
+        </div>
+
+        <div class="xform-group">
+            <div class="xform-group-title">Demographics</div>
+
+            <div class="xform-control">
+                <xf:select1 ref="ageGroup">
+                    <xf:label class="xform-caption">Age Group:</xf:label>
+                    <xf:hint>Select your age group</xf:hint>
+                    <xf:alert>Age group selection is required</xf:alert>
+                    <xf:item>
+                        <xf:label>Under 18</xf:label>
+                        <xf:value>under-18</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>18–24</xf:label>
+                        <xf:value>18-24</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>25–34</xf:label>
+                        <xf:value>25-34</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>35–44</xf:label>
+                        <xf:value>35-44</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>45+</xf:label>
+                        <xf:value>45-plus</xf:value>
+                    </xf:item>
+                </xf:select1>
+            </div>
+
+            <div class="xform-control">
+                <xf:select1 ref="gender">
+                    <xf:label class="xform-caption">Gender:</xf:label>
+                    <xf:hint>Select your gender</xf:hint>
+                    <xf:alert>Gender selection is required</xf:alert>
+                    <xf:item>
+                        <xf:label>Male</xf:label>
+                        <xf:value>male</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Female</xf:label>
+                        <xf:value>female</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Other</xf:label>
+                        <xf:value>other</xf:value>
+                    </xf:item>
+                </xf:select1>
+            </div>
+        </div>
+
+        <div class="xform-group">
+            <div class="xform-group-title">Additional Information</div>
+
+            <div class="xform-control">
+                <xf:textarea ref="feedback">
+                    <xf:label class="xform-caption">Feedback:</xf:label>
+                    <xf:hint>Please provide your feedback or comments</xf:hint>
+                </xf:textarea>
+            </div>
+        </div>
+
+        <div class="form-buttons">
+            <xf:submit submission="submit">
+                <xf:label>Submit Survey</xf:label>
+            </xf:submit>
+
+            <xf:reset>
+                <xf:label>Reset Form</xf:label>
+            </xf:reset>
+        </div>
+    </div>
+</body>
+
+</html>
